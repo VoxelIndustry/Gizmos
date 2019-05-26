@@ -1,0 +1,16 @@
+[
+{
+  "modid": "gizmos",
+  "name": "Gizmos Mod",
+  "description": "Debug Gizmos.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Ourten"],
+  "credits": "e",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
