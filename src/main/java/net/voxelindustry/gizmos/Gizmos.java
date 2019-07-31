@@ -6,6 +6,7 @@ import net.voxelindustry.gizmos.drawables.BaseGizmo;
 import net.voxelindustry.gizmos.drawables.BoxGizmo;
 import net.voxelindustry.gizmos.drawables.EdgedBoxGizmo;
 import net.voxelindustry.gizmos.drawables.OutlineBoxGizmo;
+import net.voxelindustry.gizmos.drawables.TextGizmo;
 import net.voxelindustry.gizmos.event.WorldRenderHandler;
 import net.voxelindustry.gizmos.util.PositionUtil;
 import org.apache.commons.lang3.tuple.Pair;
@@ -86,9 +87,11 @@ public class Gizmos
         return edgedBox(pos, ONE, colorRGBA, edgeColorRGBA);
     }
 
-    public static void path(Function<BlockPos, BaseGizmo> gizmoGenerator, List<BlockPos> positions)
+    public static TextGizmo text(Vec3d pos, String text, int colorRGBA)
     {
-        List<BaseGizmo> collect = IntStream.range(0, positions.size() - 1)
+        return WorldRenderHandler.instance().addGizmo(new TextGizmo(pos, text, colorRGBA));
+    }
+
     public static <T extends BaseGizmo> void path(Function<BlockPos, BaseGizmo> gizmoGenerator, List<BlockPos> positions)
     {
         IntStream.range(0, positions.size() - 1)

@@ -92,6 +92,8 @@ public class WorldRenderHandler
 
         Gizmos.box(begin, new Vec3d(0.25f, 0.25f, 0.25f), 0xFF0000FF);
         Gizmos.box(end, new Vec3d(0.25f, 0.25f, 0.25f), 0x00FF00FF);
+
+        Gizmos.text(new Vec3d(375, 47, 455), "TEST", 0);
     }
 
     public <T extends BaseGizmo> T addGizmo(T gizmo)
