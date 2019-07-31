@@ -14,6 +14,7 @@ import net.voxelindustry.gizmos.drawables.BaseGizmo;
 import net.voxelindustry.gizmos.drawables.DrawMode;
 import org.lwjgl.opengl.GL11;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -43,8 +44,7 @@ public class WorldRenderHandler
     @SubscribeEvent
     public void onRenderWorldLast(RenderWorldLastEvent e)
     {
-        if (player == null)
-            player = Minecraft.getMinecraft().player;
+        player = Minecraft.getMinecraft().player;
 
         double playerX = player.prevPosX + (player.posX - player.prevPosX) * e.getPartialTicks();
         double playerY = player.prevPosY + (player.posY - player.prevPosY) * e.getPartialTicks();
@@ -55,8 +55,20 @@ public class WorldRenderHandler
         GlStateManager.enableBlend();
 
         DrawMode currentMode = DrawMode.TEXTURE;
-        while (toDraw.size() != 0)
-            currentMode = toDraw.poll().draw(currentMode, playerX, playerY, playerZ);
+
+        int size = toDraw.size();
+
+        List<BaseGizmo> toAdd = new ArrayList<>();
+        for (int i = 0; i < size; i++)
+        {
+            BaseGizmo gizmo = toDraw.poll();
+
+            currentMode = gizmo.draw(currentMode, playerX, playerY, playerZ);
+            if (gizmo.getHandle().isPresent() && !gizmo.getHandle().get().shouldExpire())
+                toAdd.add(gizmo);
+        }
+
+        toDraw.addAll(toAdd);
 
         GlStateManager.disableBlend();
         GlStateManager.disableAlpha();

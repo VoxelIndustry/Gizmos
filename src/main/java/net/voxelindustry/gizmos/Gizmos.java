@@ -13,7 +13,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.IntFunction;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -90,6 +89,9 @@ public class Gizmos
     public static void path(Function<BlockPos, BaseGizmo> gizmoGenerator, List<BlockPos> positions)
     {
         List<BaseGizmo> collect = IntStream.range(0, positions.size() - 1)
+    public static <T extends BaseGizmo> void path(Function<BlockPos, BaseGizmo> gizmoGenerator, List<BlockPos> positions)
+    {
+        IntStream.range(0, positions.size() - 1)
                 .boxed()
                 .map(index -> Pair.of(index, index + 1))
                 .map(indexPair -> Pair.of(positions.get(indexPair.getLeft()), positions.get(indexPair.getRight())))
@@ -102,9 +104,6 @@ public class Gizmos
                 })
                 .distinct()
                 .map(gizmoGenerator)
-                .collect(Collectors.toList());
-
-        collect
                 .forEach(WorldRenderHandler.instance()::addGizmo);
     }
 
