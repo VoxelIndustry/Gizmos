@@ -1,9 +1,6 @@
 package net.voxelindustry.gizmos.handle;
 
-public class GizmoHandle
+public interface GizmoHandle
 {
-    public boolean shouldExpire()
-    {
-        return true;
-    }
+    boolean shouldExpire();
 }

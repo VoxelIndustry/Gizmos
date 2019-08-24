@@ -3,7 +3,7 @@ package net.voxelindustry.gizmos.handle;
 import java.time.Duration;
 import java.time.LocalTime;
 
-public class TimedGizmoHandle extends GizmoHandle
+public class TimedGizmoHandle implements GizmoHandle
 {
     private final Duration  duration;
     private final LocalTime startTime;

@@ -38,7 +38,7 @@ public class WorldRenderHandler
 
     private WorldRenderHandler()
     {
-        toDraw = new PriorityQueue<>(Comparator.comparingInt(gizmo -> gizmo.getDrawMode().ordinal()));
+        toDraw = new PriorityQueue<>(Comparator.comparingInt(gizmo -> gizmo == null ? Integer.MIN_VALUE : gizmo.getDrawMode().ordinal()));
     }
 
     @SubscribeEvent
@@ -62,6 +62,9 @@ public class WorldRenderHandler
         for (int i = 0; i < size; i++)
         {
             BaseGizmo gizmo = toDraw.poll();
+
+            if(gizmo == null)
+                continue;
 
             currentMode = gizmo.draw(currentMode, playerX, playerY, playerZ);
             if (gizmo.getHandle().isPresent() && !gizmo.getHandle().get().shouldExpire())
@@ -96,7 +99,7 @@ public class WorldRenderHandler
         Gizmos.text(new Vec3d(375, 47, 455), "TEST", 0);
     }
 
-    public <T extends BaseGizmo> T addGizmo(T gizmo)
+    public synchronized <T extends BaseGizmo> T addGizmo(T gizmo)
     {
         this.toDraw.add(gizmo);
         return gizmo;

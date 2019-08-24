@@ -110,6 +110,24 @@ public class Gizmos
                 .forEach(WorldRenderHandler.instance()::addGizmo);
     }
 
+    public static <T extends BaseGizmo> void path(Function<Vec3d, BaseGizmo> gizmoGenerator, List<Vec3d> positions, double step)
+    {
+        IntStream.range(0, positions.size() - 1)
+                .boxed()
+                .map(index -> Pair.of(index, index + 1))
+                .map(indexPair -> Pair.of(positions.get(indexPair.getLeft()), positions.get(indexPair.getRight())))
+                .flatMap(posPair ->
+                {
+                    if (posPair.getLeft().distanceTo(posPair.getRight()) <= step)
+                        return Stream.of(posPair.getLeft(), posPair.getRight());
+                    else
+                        return PositionUtil.fillGaps(posPair.getLeft(), posPair.getRight(), step).stream();
+                })
+                .distinct()
+                .map(gizmoGenerator)
+                .forEach(WorldRenderHandler.instance()::addGizmo);
+    }
+
     public static void pathIndexed(IntFunction<BaseGizmo> gizmoGenerator, List<BlockPos> positions)
     {
         path(pos -> gizmoGenerator.apply(positions.indexOf(pos)), positions);
