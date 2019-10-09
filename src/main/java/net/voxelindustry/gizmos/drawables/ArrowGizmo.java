@@ -14,7 +14,6 @@ import net.voxelindustry.gizmos.render.ArrowRenderer;
 @Getter
 public class ArrowGizmo extends BaseGizmo
 {
-
     private Vec3d start;
     private Vec3d end;
 
