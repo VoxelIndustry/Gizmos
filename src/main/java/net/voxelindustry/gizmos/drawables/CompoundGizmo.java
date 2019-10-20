@@ -1,5 +1,7 @@
 package net.voxelindustry.gizmos.drawables;
 
+import net.minecraft.util.math.Vec3d;
+
 import java.util.List;
 
 public class CompoundGizmo extends BaseGizmo
@@ -8,6 +10,7 @@ public class CompoundGizmo extends BaseGizmo
 
     public CompoundGizmo(List<BaseGizmo> gizmos)
     {
+        super(Vec3d.ZERO);
         this.gizmos = gizmos;
     }
 

@@ -5,8 +5,9 @@ import java.time.LocalTime;
 
 public class TimedGizmoHandle implements GizmoHandle
 {
-    private final Duration  duration;
-    private final LocalTime startTime;
+    private final Duration duration;
+
+    private LocalTime startTime;
 
     public TimedGizmoHandle(Duration duration)
     {
@@ -18,5 +19,15 @@ public class TimedGizmoHandle implements GizmoHandle
     public boolean shouldExpire()
     {
         return Duration.between(startTime, LocalTime.now()).compareTo(duration) >= 0;
+    }
+
+    public void reset()
+    {
+        startTime = LocalTime.now();
+    }
+
+    public double getExpirationProgress()
+    {
+        return Duration.between(startTime, LocalTime.now()).toMillis() / (double) duration.toMillis();
     }
 }

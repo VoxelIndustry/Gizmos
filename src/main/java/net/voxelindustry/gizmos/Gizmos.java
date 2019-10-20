@@ -1,5 +1,6 @@
 package net.voxelindustry.gizmos;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.voxelindustry.gizmos.drawables.BaseGizmo;
@@ -8,12 +9,15 @@ import net.voxelindustry.gizmos.drawables.EdgedBoxGizmo;
 import net.voxelindustry.gizmos.drawables.OutlineBoxGizmo;
 import net.voxelindustry.gizmos.drawables.TextGizmo;
 import net.voxelindustry.gizmos.event.WorldRenderHandler;
+import net.voxelindustry.gizmos.unique.UniqueGizmos;
 import net.voxelindustry.gizmos.util.PositionUtil;
+import net.voxelindustry.gizmos.widget.WindowGizmo;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.IntFunction;
+import java.util.function.Supplier;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -151,5 +155,32 @@ public class Gizmos
     public static void edgedBoxPath(List<BlockPos> positions, double size, int boxColorRGBA, int edgeColorRGBA)
     {
         path(pos -> edgedBox(new Vec3d(pos), new Vec3d(size, size, size), boxColorRGBA, edgeColorRGBA), positions);
+    }
+
+    public static WindowGizmo window(WindowGizmo.Parameters parameters)
+    {
+        return WorldRenderHandler.instance().addGizmo(new WindowGizmo(parameters));
+    }
+
+    public static WindowGizmo window(Vec3d pos, int textColorRGBA)
+    {
+        return window(WindowGizmo.Parameters.builder().pos(pos).textColorRGBA(textColorRGBA).build());
+    }
+
+    public static WindowGizmo window(Vec3d pos)
+    {
+        return window(pos, 0x40404000);
+    }
+
+    public static <T extends BaseGizmo> T getCreateByPos(Vec3d pos, String name, Supplier<T> gizmoCreator)
+    {
+        return (T) UniqueGizmos.getByPos(pos, name)
+                .orElseGet(() -> gizmoCreator.get().uniqueByPos(pos, name));
+    }
+
+    public static <T extends BaseGizmo> T getCreateByEntity(Entity entity, String name, Supplier<T> gizmoCreator)
+    {
+        return (T) UniqueGizmos.getByEntity(entity, name)
+                .orElseGet(() -> gizmoCreator.get().uniqueByEntity(entity, name));
     }
 }

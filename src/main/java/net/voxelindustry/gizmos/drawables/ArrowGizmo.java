@@ -1,25 +1,33 @@
 package net.voxelindustry.gizmos.drawables;
 
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.Vec3d;
 import net.voxelindustry.gizmos.render.ArrowRenderer;
 
-@AllArgsConstructor
+import static net.minecraft.util.EnumFacing.Axis;
+
 @EqualsAndHashCode(callSuper = true)
 @ToString
 @Getter
 public class ArrowGizmo extends BaseGizmo
 {
-    private Vec3d start;
-    private Vec3d end;
+    private final Vec3d start;
+    private final Vec3d end;
 
-    private EnumFacing.Axis axis;
+    private final Axis axis;
 
-    private int color;
+    private final int color;
+
+    public ArrowGizmo(Vec3d pos, Vec3d start, Vec3d end, Axis axis, int color)
+    {
+        super(pos);
+        this.start = start;
+        this.end = end;
+        this.axis = axis;
+        this.color = color;
+    }
 
     @Override
     public DrawMode draw(DrawMode currentMode, double playerX, double playerY, double playerZ)
@@ -29,7 +37,6 @@ public class ArrowGizmo extends BaseGizmo
 
         ArrowRenderer.drawHorArrow(start.x - playerX, start.y - playerY, start.z - playerZ,
                 end.x - playerX, end.y - playerY, end.z - playerZ, color);
-
 
         return getDrawMode();
     }
