@@ -25,17 +25,17 @@ import net.voxelindustry.gizmos.widget.data.MergeValue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import static net.voxelindustry.gizmos.widget.data.Placeholders.PLACEHOLDER_PATTERN;
 
 @EqualsAndHashCode(callSuper = true)
 @ToString
 @Getter
 public class WindowGizmo extends BaseGizmo implements IDataHolderGizmo
 {
-    private static final Pattern PLACEHOLDER_PATTERN = Pattern.compile("\\{\\{(.+?)\\}\\}");
-    private static final double  TEXT_SCALE          = 0.0625F / 4;
-    private static final double  PADDING             = 0.04D;
-    private static final double  BORDER_WIDTH        = 0.02D;
+    private static final double TEXT_SCALE   = 0.0625F / 4;
+    private static final double PADDING      = 0.04D;
+    private static final double BORDER_WIDTH = 0.02D;
 
     private Table<Integer, String, MergeValue> placeholders = HashBasedTable.create();
 

@@ -4,7 +4,7 @@ import net.voxelindustry.gizmos.handle.GizmoHandle;
 
 public interface IDataHolderGizmo
 {
-    public void appendData(String text, GizmoHandle handle, Object... values);
+    void appendData(String text, GizmoHandle handle, Object... values);
 
     void removeData(String text);
 

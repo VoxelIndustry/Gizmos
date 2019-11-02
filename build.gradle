@@ -30,7 +30,16 @@ minecraft {
 }
 
 dependencies {
-    compileOnly 'org.projectlombok:lombok:1.18.8'
+    compileOnly 'org.projectlombok:lombok:1.18.10'
+
+    testCompile('org.junit.jupiter:junit-jupiter-api:5.3.2')
+    testCompile('org.mockito:mockito-core:2.24.0')
+    testCompile('org.mockito:mockito-junit-jupiter:2.24.0')
+    testCompile('org.assertj:assertj-core:3.10.0')
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.10'
+
+    testRuntime('org.junit.jupiter:junit-jupiter-engine:5.3.2')
 }
 
 processResources {
